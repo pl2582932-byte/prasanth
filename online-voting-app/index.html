@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Voting App</title>
+  <meta name="description" content="A static online voting web app with localStorage persistence, live results, and voter audit log." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Secure Local Voting Demo</p>
+        <h1>Online Voting Application</h1>
+        <p class="hero-text">
+          Cast a vote, view live results instantly, and inspect the voter audit log.
+          All data is stored locally in your browser using <code>localStorage</code>.
+        </p>
+      </div>
+    </header>
+
+    <main class="grid-layout">
+      <section class="card form-card">
+        <div class="card-header">
+          <h2>Cast Your Vote</h2>
+          <p>One vote per email address.</p>
+        </div>
+
+        <div id="successBanner" class="banner success hidden" role="alert">
+          Vote submitted successfully!
+        </div>
+
+        <form id="voteForm" novalidate>
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Enter your full name"
+              required
+            />
+            <small class="error-message" id="nameError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              placeholder="Enter your age"
+              min="1"
+              required
+            />
+            <small class="error-message" id="ageError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email address"
+              required
+            />
+            <small class="error-message" id="emailError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="candidate">Candidate Selection</label>
+            <select id="candidate" name="candidate" required>
+              <option value="">Select a candidate</option>
+              <option value="Alice Johnson">Alice Johnson</option>
+              <option value="Brian Smith">Brian Smith</option>
+              <option value="Carla Davis">Carla Davis</option>
+              <option value="Daniel Lee">Daniel Lee</option>
+            </select>
+            <small class="error-message" id="candidateError"></small>
+          </div>
+
+          <button type="submit" class="btn-primary">Submit Vote</button>
+        </form>
+      </section>
+
+      <section class="card results-card">
+        <div class="card-header">
+          <h2>Live Results</h2>
+          <p>Results update immediately after each valid vote.</p>
+        </div>
+
+        <div class="results-summary">
+          <div class="summary-box">
+            <span class="summary-label">Total Votes</span>
+            <strong id="totalVotes">0</strong>
+          </div>
+          <div class="summary-box">
+            <span class="summary-label">Unique Voters</span>
+            <strong id="uniqueVoters">0</strong>
+          </div>
+        </div>
+
+        <div id="resultsContainer" class="results-list"></div>
+      </section>
+
+      <section class="card audit-card full-width">
+        <div class="audit-header">
+          <div>
+            <h2>Voter Audit Log</h2>
+            <p>Review all locally stored submissions with timestamps.</p>
+          </div>
+          <button id="toggleAuditBtn" class="btn-secondary" type="button" aria-expanded="false">
+            Show Audit Log
+          </button>
+        </div>
+
+        <div id="auditWrapper" class="audit-wrapper collapsed">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th>Selected Candidate</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody">
+                <tr>
+                  <td colspan="5" class="empty-state">No votes submitted yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
